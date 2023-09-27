@@ -1,0 +1,186 @@
+{
+  "$kind": "Microsoft.AdaptiveDialog",
+  "$designer": {
+    "name": "DiplomskiChatBot_Composer",
+    "description": "",
+    "id": "A79tBe"
+  },
+  "autoEndDialog": true,
+  "defaultResultProperty": "dialog.result",
+  "triggers": [
+    {
+      "$kind": "Microsoft.OnConversationUpdateActivity",
+      "$designer": {
+        "id": "376720",
+        "comment": "This trigger runs when a conversation update activity is sent to the bot. This indicates a user or bot being added or removed from a conversation."
+      },
+      "actions": [
+        {
+          "$kind": "Microsoft.Foreach",
+          "$designer": {
+            "id": "518944",
+            "name": "Loop: for each item",
+            "comment": "For each member added to the conversation."
+          },
+          "itemsProperty": "turn.Activity.membersAdded",
+          "actions": [
+            {
+              "$kind": "Microsoft.IfCondition",
+              "$designer": {
+                "id": "641773",
+                "name": "Branch: if/else",
+                "comment": "Checks that that member added ID does not match the bot ID. This prevents the greeting message from being sent when the bot is added to a conversation."
+              },
+              "condition": "=string(dialog.foreach.value.id) != string(turn.Activity.Recipient.id)",
+              "actions": [
+                {
+                  "$kind": "Microsoft.SetProperty",
+                  "$designer": {
+                    "id": "3GE17V"
+                  },
+                  "value": true,
+                  "property": "user.isNew"
+                },
+                {
+                  "$kind": "Microsoft.SendActivity",
+                  "$designer": {
+                    "id": "859266",
+                    "name": "Send a response"
+                  },
+                  "activity": "${SendActivity_Greeting()}"
+                }
+              ]
+            }
+          ],
+          "value": "dialog.foreach.value",
+          "index": "dialog.foreach.index"
+        }
+      ]
+    },
+    {
+      "$kind": "Microsoft.OnUnknownIntent",
+      "$designer": {
+        "id": "mb2n1u",
+        "comment": "This trigger fires when an incoming activity is not handled by any other trigger."
+      },
+      "actions": [
+        {
+          "$kind": "Microsoft.IfCondition",
+          "$designer": {
+            "id": "pR6Cx4"
+          },
+          "condition": "=turn.activity.text == \"new\" || user.isNew",
+          "actions": [
+            {
+              "$kind": "Microsoft.IfCondition",
+              "$designer": {
+                "id": "jcrUHw"
+              },
+              "condition": "=turn.activity.text == \"new\"",
+              "actions": [
+                {
+                  "$kind": "Microsoft.SetProperty",
+                  "$designer": {
+                    "id": "IbP4aW"
+                  },
+                  "property": "turn.activity.text",
+                  "value": "\"Hi\""
+                }
+              ]
+            },
+            {
+              "$kind": "Microsoft.SetProperty",
+              "$designer": {
+                "id": "iYA6F5"
+              },
+              "property": "user.isNew",
+              "value": false
+            },
+            {
+              "$kind": "Microsoft.SetProperty",
+              "$designer": {
+                "id": "LynRAQ"
+              },
+              "property": "user.data",
+              "value": [
+                {
+                  "role": "user",
+                  "content": "${turn.activity.text}"
+                }
+              ]
+            }
+          ],
+          "elseActions": [
+            {
+              "$kind": "Microsoft.SetProperty",
+              "$designer": {
+                "id": "F75HA1"
+              },
+              "property": "turn.input",
+              "value": [
+                {
+                  "role": "user",
+                  "content": "${turn.activity.text}"
+                }
+              ]
+            },
+            {
+              "$kind": "Microsoft.SetProperty",
+              "$designer": {
+                "id": "j3WLSG"
+              },
+              "property": "user.data",
+              "value": "=union(user.data, turn.input)"
+            }
+          ]
+        },
+        {
+          "$kind": "Microsoft.HttpRequest",
+          "$designer": {
+            "id": "KyZ7ah"
+          },
+          "resultProperty": "turn.results",
+          "method": "POST",
+          "url": "${settings.OpenAI.APIendpoint}",
+          "body": {
+            "model": "${settings.OpenAI.APImodel}",
+            "messages": "=user.data"
+          },
+          "headers": {
+            "Authorization": "Bearer ${settings.OpenAI.APIkey}"
+          },
+          "contentType": "application/json",
+          "responseType": "json"
+        },
+        {
+          "$kind": "Microsoft.SendActivity",
+          "$designer": {
+            "id": "bbt0Gj"
+          },
+          "activity": "${SendActivity_bbt0Gj()}"
+        },
+        {
+          "$kind": "Microsoft.SetProperty",
+          "$designer": {
+            "id": "mnxht8"
+          },
+          "property": "turn.output",
+          "value": [
+            "=turn.results.content.choices[0].message"
+          ]
+        },
+        {
+          "$kind": "Microsoft.SetProperty",
+          "$designer": {
+            "id": "H4Gf2I"
+          },
+          "property": "user.data",
+          "value": "=union(user.data, turn.output)"
+        }
+      ]
+    }
+  ],
+  "generator": "DiplomskiChatBot_Composer.lg",
+  "id": "DiplomskiChatBot_Composer",
+  "recognizer": "DiplomskiChatBot_Composer.lu.qna"
+}
