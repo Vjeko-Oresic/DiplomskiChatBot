@@ -1,0 +1,37 @@
+{
+  "Version": 1,
+  "Hash": "a9cPXbIgtcaqS9BIYvUWpOVbNcMyF8i8avz9x+3JIE0=",
+  "Source": "DiplomskiChatBot",
+  "BasePath": "_content/DiplomskiChatBot",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [
+    {
+      "Name": "DiplomskiChatBot\\wwwroot",
+      "Source": "DiplomskiChatBot",
+      "ContentRoot": "D:\\Source\\DiplomskiChatBot\\wwwroot\\",
+      "BasePath": "_content/DiplomskiChatBot",
+      "Pattern": "**"
+    }
+  ],
+  "Assets": [
+    {
+      "Identity": "D:\\Source\\DiplomskiChatBot\\wwwroot\\default.htm",
+      "SourceId": "DiplomskiChatBot",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\Source\\DiplomskiChatBot\\wwwroot\\",
+      "BasePath": "_content/DiplomskiChatBot",
+      "RelativePath": "default.htm",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\default.htm"
+    }
+  ]
+}
