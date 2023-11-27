@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 //
 // Generated with Bot Builder V4 SDK Template for Visual Studio CoreBot v4.18.1
+// Modifications by Vjekoslav Orešić
 
 using Microsoft.Bot.Builder;
 using Microsoft.Bot.Builder.Integration.AspNet.Core;
