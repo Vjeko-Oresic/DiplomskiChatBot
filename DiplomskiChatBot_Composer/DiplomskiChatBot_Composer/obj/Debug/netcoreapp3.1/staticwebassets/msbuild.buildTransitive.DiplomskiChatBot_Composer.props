@@ -1,3 +1,0 @@
-﻿<Project>
-  <Import Project="..\buildMultiTargeting\DiplomskiChatBot_Composer.props" />
-</Project>
