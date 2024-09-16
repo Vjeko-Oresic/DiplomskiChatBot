@@ -76,7 +76,12 @@ namespace DiplomskiChatBot.Dialogs
             var retryMessageText = $"Please enter a valid age.";
             var retryMessage = MessageFactory.Text(retryMessageText);
 
-            return await stepContext.PromptAsync(AgePromptDlgId, new PromptOptions { Prompt = promptMessage, RetryPrompt = retryMessage }, cancellationToken);
+            return await stepContext.PromptAsync(AgePromptDlgId,
+                new PromptOptions
+                {
+                    Prompt = promptMessage,
+                    RetryPrompt = retryMessage
+                }, cancellationToken);
         }
 
         private async Task<bool> ValidateAgeAsync(PromptValidatorContext<int> promptContext, CancellationToken cancellationToken)

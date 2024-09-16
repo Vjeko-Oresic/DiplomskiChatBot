@@ -86,7 +86,7 @@ namespace DiplomskiChatBot.Bots
 
             if (gptResponse != null)
             {
-                await turnContext.SendActivityAsync(MessageFactory.Text(gptResponse.Content, gptResponse.Content), cancellationToken);
+                await turnContext.SendActivityAsync(MessageFactory.Text(gptResponse.Content), cancellationToken);
                 request.Messages.Add(
                     new Messages()
                     {
@@ -148,7 +148,7 @@ namespace DiplomskiChatBot.Bots
             {
                 if (member.Id != turnContext.Activity.Recipient.Id)
                 {
-                    await turnContext.SendActivityAsync(MessageFactory.Text(welcomeText, welcomeText), cancellationToken);
+                    await turnContext.SendActivityAsync(MessageFactory.Text(welcomeText), cancellationToken);
                 }
             }
         }
